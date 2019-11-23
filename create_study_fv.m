@@ -61,9 +61,8 @@ for j=1:n
     EEG.badcomps=[];
     
     EEG = eeg_checkset(EEG);
-    [ALLEEG EEG] = eeg_store(ALLEEG, EEG);
+    [ALLEEG, EEG] = eeg_store(ALLEEG, EEG);
     
-       
     EEG = pop_saveset(EEG, list(j).name, pathin);
 
 end
@@ -72,13 +71,13 @@ end
 for i= 1:n
 
     %creating the study
-    [STUDY ALLEEG]= std_editset(STUDY, ALLEEG,'name', studyname, 'commands', {...
-        {'index', i,'load', [pathin,list(i).name],'subject',num2str(i)}
+    [STUDY, ALLEEG]= std_editset(STUDY, ALLEEG,'name', studyname, 'commands', {...
+        {'index', i,'load', fullfile(pathin, list(i).name),'subject',num2str(i)}
     });
 end
 
 %saving the STUDY and not changing datasets
-[STUDY ALLEEG]= std_editset(STUDY,ALLEEG,'filename',[pathout studyname '.study'], 'updatedat', 'off');
+[STUDY, ALLEEG]= std_editset(STUDY,ALLEEG,'filename',fullfile(pathout, [ studyname '.study']), 'updatedat', 'off');
 
 %CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 
