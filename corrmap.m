@@ -394,8 +394,8 @@ for a=1:leng % first loop: only runs more than once in auto mode
             
             h=h+ics;
             
+            clear res
         end %closes "i" loop
-        clear res
         
         %sorting correlation in descending order
         corr_dec=sortrows((all_info),-1);
