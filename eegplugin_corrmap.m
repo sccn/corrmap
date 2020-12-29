@@ -34,7 +34,7 @@
 
 function vers=eegplugin_corrmap( fig, try_strings, catch_strings);
 
- vers = 'corrmap2.02.2';
+ vers = 'corrmap2.1';
     if nargin < 3
         error('eegplugin_corrmap requires 3 arguments');
     end
