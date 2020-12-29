@@ -71,7 +71,7 @@ col=[0.7,0.25,0.5,0.3,0.7,0.5,0.2,0.8,0.4,0.7,1,0,0,0.6,0.2,0.4,0,0.7,0.8,0.25,0
 sz=4;  %smallest font size
 
 %%%%%%%%%
-for v=in:fin;
+for v=in:fin
 
     if flg==0
         val_th=str2num(CORRMAP.input.corr_th);
@@ -120,7 +120,7 @@ for v=in:fin;
     %plotting
     numb=1; %while variable
 
-    while numb<=val;
+    while numb<=val
         figure()
         k=1; %index for positioning head plots
         l=5; %index for positioning head plots

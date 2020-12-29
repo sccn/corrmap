@@ -143,7 +143,7 @@ g = finputcheck(varargin, { 'chanlocs' { 'string','struct' } {[] []} '';...
                             'clname' 'string'   []    '';...
                             'badcomps' 'string' {'yes', 'no'} 'no'});
 
-if isstr(g), error(g); end;
+if isstr(g), error(g); end
 opt = g;
 
 if ~isempty(g.chanlocs)
@@ -221,7 +221,7 @@ if length(ch_aux)==0 || length(ch_aux)<n-1
     
     if length(chanlocs)==0
         chanlocs=eeg_mergelocs(ALLEEG.chanlocs);
-    end;
+    end
     
     % code to interpolate missing channels - calls interp_chan()
     fprintf('Warning: Datasets do not have the same number of channels.\nMissing channels will be interpolated using channels location file.\n');
@@ -290,7 +290,7 @@ if length(ch_aux)==0 || length(ch_aux)<n-1
         TMPEEG            = eeg_interp(TMPEEG, CHANS);
         comp{ind} = TMPEEG.data;
         tmpchans{ind} = TMPEEG.chanlocs;
-    end;
+    end
     %[comp,CHANS]=interp_chan(SELEEG,chanlocs); %function to create cell with new datasets
     %chan=CHANS; % new channel locations
     %tot_ics=size(comp{1},2); %number of ICs can be different from number of channels
@@ -350,7 +350,7 @@ end
 
 for a=1:leng % first loop: only runs more than once in auto mode
     
-    for m=1:2; %loop for 2 main steps
+    for m=1:2 %loop for 2 main steps
         
         h=1;
         if m==1
@@ -374,7 +374,7 @@ for a=1:leng % first loop: only runs more than once in auto mode
                         res(j)=tmpmat; % Octave
                     else
                         res(j)=tmpmat(2);
-                    end;
+                    end
                 end
             end %closes "j" loop
             
@@ -417,13 +417,13 @@ for a=1:leng % first loop: only runs more than once in auto mode
         ind=1;
         
         %error message for user
-        if leng==1 && loop==1;
+        if leng==1 && loop==1
             fprintf('>');
             fprintf('ERROR: There are no ICs above the selected correlation threshold (th=%11.4g). \n',tres(a));
             fprintf('> \n');
             return
         else
-            while loop==1;
+            while loop==1
                 if ind >length(tres)-1
                     fprintf('Warning: There are no ICs above the lowest correlation threshold (th=%11.4g). \n',tres(a+ind-1));
                     if tres(a+ind-1)==0.8
@@ -611,7 +611,7 @@ if strcmpi(opt.plot, 'on')
     else
         corrmap_plot_v2(CORRMAP,CORRMAP_temp,comp,chan,rep,m,in,fin,plot_ics, mediaplot,tt(1),flg);
     end
-end;
+end
 
 %%% BLOCK 8 - saving EEG:badcomps %%%%%
 
@@ -634,9 +634,8 @@ if strcmp(badcomps,'yes')
     end
     
     for jj=1:length(CORRMAP.datasets.index)
-        aux_ind=find(SELEEG(jj).badcomps==0);
-        SELEEG(jj).badcomps(aux_ind)=[];
-        CURRENTSTUDY = 0;EEG=SELEEG(jj); [SELEEG EEG CURRENTSET] = pop_newset(SELEEG, EEG, jj , 'overwrite','on', 'study',1);
+        SELEEG(jj).badcomps(SELEEG(jj).badcomps==0)=[];
+        CURRENTSTUDY = 0;EEG=SELEEG(jj); [SELEEG, EEG, CURRENTSET] = pop_newset(SELEEG, EEG, jj , 'overwrite','on', 'study',1);
         
         pop_saveset( EEG,  'filename', EEG.filename, 'filepath', EEG.filepath);
     end
@@ -653,9 +652,9 @@ if val_cl==0
         STUDY.cluster = [];
         for index = 1:length(ALLEEG)
             STUDY.datasetinfo(index).comps = 1:size(ALLEEG(index).icaweights,1);
-        end;
+        end
         STUDY = std_checkset(STUDY, ALLEEG);
-    end;
+    end
     
     % create cluster indices
     datinds  = datindsori(CORRMAP.output.sets{2});
@@ -665,10 +664,9 @@ if val_cl==0
     for index = 1:length(datinds)
         allsets = STUDY.cluster(1).sets';
         tmpdatind  = mod(find(allsets(:) == datinds(index))-1, ncomps)+1;
-        tmpcompind = find( STUDY.cluster(1).comps(tmpdatind) == compinds(index) );
-        oriind = tmpdatind(tmpcompind);
+        oriind = tmpdatind( STUDY.cluster(1).comps(tmpdatind) == compinds(index) );
         clust(oriind) = 1;
-    end;
+    end
     
     STUDY = std_createclust(STUDY,ALLEEG, 'name', CORRMAP.input.clname, 'clusterind', clust, 'ignore0', 'on');
     %sname= CORRMAP.input.clname;
@@ -687,12 +685,12 @@ toc
 %   (Type "warning off MATLAB:divideByZero" to suppress this warning.)
 
 % replacement function for the corr function
-function corrmat = replacement_corr(a, b);
+function corrmat = replacement_corr(a, b)
 
 corrmat = zeros(size(a,2), size(b,2));
 for inda = 1:size(a,2)
     for indb = 1:size(b,2)
         tmpmat = corrcoef(a(:,inda), b(:,indb));
         corrmat(inda, indb) = tmpmat(2);
-    end;
-end;
+    end
+end
