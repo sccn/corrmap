@@ -382,7 +382,7 @@ for a=1:leng % first loop: only runs more than once in auto mode
             for f=h:h+ics-1
                 
                 aux(f)=max(abs(res)); %abs max corr
-                all_info(f,2)=find(abs(res)==aux(f)); %corr_index
+                all_info(f,2)=find(abs(res)==max(abs(res))); %corr_index
                 all_info(f,1)=res(all_info(f,2)); % max_corr
                 
                 warning off MATLAB:divideByZero %Warning: Divide by zero added by FViola on 04/06/08
@@ -694,3 +694,4 @@ for inda = 1:size(a,2)
         corrmat(inda, indb) = tmpmat(2);
     end
 end
+
